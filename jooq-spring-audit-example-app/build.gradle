@@ -8,7 +8,6 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jooq', version: springBootVersion
 
     runtime group: 'org.eclipse.jetty', name: 'jetty-webapp', version: jettyVersion
-    runtime group: 'org.postgresql', name: 'postgresql', version: pgVersion
 
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
     testCompile group: 'com.opentable.components', name: 'otj-pg-embedded', version: pgEmbeddedVersion

@@ -1,6 +1,6 @@
 package innossh.jooq.spring.audit.example.service;
 
-import innossh.jooq.spring.audit.example.db.jooq.tables.pojos.User;
+import innossh.jooq.spring.audit.example.db.tables.pojos.User;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

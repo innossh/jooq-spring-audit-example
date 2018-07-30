@@ -9,6 +9,8 @@ dependencies {
     compile group: 'org.jooq', name: 'jooq-meta', version: jooqVersion
     compile group: 'org.jooq', name: 'jooq-codegen', version: jooqVersion
 
+    runtime group: 'org.postgresql', name: 'postgresql', version: pgVersion
+
     jooqRuntime project(':jooq-spring-audit-example-db-codegen')
     jooqRuntime group: 'org.postgresql', name: 'postgresql', version: pgVersion
 }
@@ -42,7 +44,7 @@ jooq {
             }
             generate {
                 deprecated = false
-                immutablePojos = true
+                pojos = true
                 daos = true
                 fluentSetters = true
                 javaTimeTypes = true

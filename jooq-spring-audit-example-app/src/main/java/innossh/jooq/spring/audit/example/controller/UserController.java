@@ -1,6 +1,6 @@
 package innossh.jooq.spring.audit.example.controller;
 
-import innossh.jooq.spring.audit.example.db.jooq.tables.pojos.User;
+import innossh.jooq.spring.audit.example.db.tables.pojos.User;
 import innossh.jooq.spring.audit.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

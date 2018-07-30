@@ -1,6 +1,7 @@
 package innossh.jooq.spring.audit.example.config;
 
-import innossh.jooq.spring.audit.example.db.jooq.tables.daos.UserDao;
+import innossh.jooq.spring.audit.example.db.tables.daos.UserDao;
+import org.jooq.RecordListenerProvider;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,11 @@ public class DatabaseConfiguration {
                 .username("example")
                 .password("example")
                 .build();
+    }
+
+    @Bean
+    public RecordListenerProvider recordListenerProvider() {
+        return () -> new AuditRecordListener();
     }
 
     @Bean
