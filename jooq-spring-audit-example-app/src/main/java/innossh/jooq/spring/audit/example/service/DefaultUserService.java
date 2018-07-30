@@ -20,4 +20,9 @@ public class DefaultUserService implements UserService {
         return userDao.findAll();
     }
 
+    @Override
+    public void createUser(User user) {
+        userDao.insert(user);
+    }
+
 }

@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.jooq.codegen.GeneratorStrategy.Mode.INTERFACE;
+import static org.jooq.codegen.GeneratorStrategy.Mode.RECORD;
 
 public class AuditGeneratorStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
-        if (INTERFACE.equals(mode)) {
+        if (RECORD.equals(mode)) {
             return Arrays.asList(Auditable.class.getName());
         }
         return new ArrayList<>();

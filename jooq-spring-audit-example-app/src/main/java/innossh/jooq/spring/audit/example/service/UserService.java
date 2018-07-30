@@ -10,4 +10,7 @@ public interface UserService {
     @Transactional
     public List<User> getUsers();
 
+    @Transactional
+    public void createUser(User user);
+
 }
