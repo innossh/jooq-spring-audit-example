@@ -1,0 +1,57 @@
+plugins {
+    id 'nu.studer.jooq' version '3.0.1'
+    id 'org.flywaydb.flyway' version '5.1.4'
+}
+
+dependencies {
+    compile project(':jooq-spring-audit-example-db-codegen')
+    compile group: 'org.jooq', name: 'jooq', version: jooqVersion
+    compile group: 'org.jooq', name: 'jooq-meta', version: jooqVersion
+    compile group: 'org.jooq', name: 'jooq-codegen', version: jooqVersion
+
+    jooqRuntime project(':jooq-spring-audit-example-db-codegen')
+    jooqRuntime group: 'org.postgresql', name: 'postgresql', version: pgVersion
+}
+
+flyway {
+    url = 'jdbc:postgresql://localhost:5432/example'
+    user = 'example'
+    password = 'example'
+    locations = ['filesystem:src/main/resources/innossh/jooq/spring/audit/example/db/migration']
+}
+
+jooq {
+    version = jooqVersion
+    example(sourceSets.main) {
+        jdbc {
+            driver = 'org.postgresql.Driver'
+            url = 'jdbc:postgresql://localhost:5432/example'
+            user = 'example'
+            password = 'example'
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'innossh.jooq.spring.audit.example.db.codegen.AuditGeneratorStrategy'
+            }
+            database {
+                name = 'org.jooq.meta.postgres.PostgresDatabase'
+                inputSchema = 'public'
+                includes = '.*'
+                excludes = 'flyway_schema_history'
+            }
+            generate {
+                deprecated = false
+                immutablePojos = true
+                daos = true
+                fluentSetters = true
+                javaTimeTypes = true
+            }
+            target {
+                packageName = 'innossh.jooq.spring.audit.example.db'
+                directory = 'src/main/java'
+            }
+        }
+    }
+}
+project.tasks.getByName('compileJava').dependsOn -= 'generateExampleJooqSchemaSource'

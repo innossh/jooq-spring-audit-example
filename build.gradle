@@ -9,75 +9,21 @@ buildscript {
 }
 
 plugins {
-    id 'org.springframework.boot' version '2.0.3.RELEASE'
-    id 'nu.studer.jooq' version '3.0.1'
-    id 'org.flywaydb.flyway' version '5.1.4'
     id 'com.avast.gradle.docker-compose' version '0.8.2'
 }
 
-apply plugin: 'idea'
-apply plugin: 'java'
-
-repositories {
-    mavenCentral()
+allprojects {
+    group 'innossh.jooq.spring.audit.example'
 }
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+subprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
 
-dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jooq', version: springBootVersion
-    compile group: 'org.jooq', name: 'jooq', version: jooqVersion
-    compile group: 'org.jooq', name: 'jooq-meta', version: jooqVersion
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
-    runtime group: 'org.eclipse.jetty', name: 'jetty-webapp', version: jettyVersion
-    runtime group: 'org.postgresql', name: 'postgresql', version: pgVersion
-    jooqRuntime group: 'org.postgresql', name: 'postgresql', version: pgVersion
-
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
-    testCompile group: 'com.opentable.components', name: 'otj-pg-embedded', version: pgEmbeddedVersion
-}
-
-flyway {
-    url = 'jdbc:postgresql://localhost:5432/example'
-    user = 'example'
-    password = 'example'
-    locations = ['filesystem:src/main/resources/innossh/jooq/spring/audit/example/db/migration']
-}
-
-jooq {
-    version = jooqVersion
-    example(sourceSets.main) {
-        jdbc {
-            driver = 'org.postgresql.Driver'
-            url = 'jdbc:postgresql://localhost:5432/example'
-            user = 'example'
-            password = 'example'
-        }
-        generator {
-            name = 'org.jooq.codegen.DefaultGenerator'
-            strategy {
-                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
-            }
-            database {
-                name = 'org.jooq.meta.postgres.PostgresDatabase'
-                inputSchema = 'public'
-                includes = '.*'
-                excludes = 'flyway_schema_history'
-            }
-            generate {
-                deprecated = false
-                immutablePojos = true
-                daos = true
-                fluentSetters = true
-                javaTimeTypes = true
-            }
-            target {
-                packageName = 'innossh.jooq.spring.audit.example.db'
-                directory = 'src/main/java'
-            }
-        }
+    repositories {
+        mavenCentral()
     }
 }
-project.tasks.getByName('compileJava').dependsOn -= 'generateExampleJooqSchemaSource'

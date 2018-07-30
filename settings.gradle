@@ -1,0 +1,5 @@
+rootProject.name = 'jooq-spring-audit-example'
+
+include 'jooq-spring-audit-example-db-codegen'
+include 'jooq-spring-audit-example-db'
+include 'jooq-spring-audit-example-app'
